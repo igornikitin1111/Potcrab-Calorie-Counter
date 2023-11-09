@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load media %}
+
+<html lang="en">
+<!-- Head -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Potcrab Calorie Counter{% endblock %}</title>
+    <link href="{% static "css/base_style.css" %}" rel="stylesheet">
+</head>
+<!-- Body-->
+<body>
+<!-- Header -->
+    <header>
+        <div id="header_box">
+            {% if user.is_authenticated %}
+            <div id="header_left_column">
+                <div id="logo-img" class="block">
+                    <a href="{% url "index" %}">
+                    <img src="{% media './media/logo/crab-logo.png' %}">
+                    </a>
+                </div>
+                <div id="logo-text" class="block">
+                    <p>
+                    <a href="{% url "index" %}">Potcrab Calorie Counter</a>
+                    </p>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "food_list" %}">
+                    <img src="{% media './media/icon/food.png' %}">
+                    </a>
+                    <a href="{% url "food_list" %}">Food List</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "dish_list" %}">
+                    <img src="{% media './media/icon/dish.png' %}">
+                    </a>
+                    <a href="{% url "dish_list" %}">Dish List</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "food_categories" %}">
+                    <img src="{% media './media/icon/dish.png' %}">
+                    </a>
+                    <a href="{% url "food_categories" %}">Food Categories</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "dish_categories" %}">
+                    <img src="{% media './media/icon/categories.png' %}">
+                    </a>
+                    <a href="{% url "dish_categories" %}">Dish Categories</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "create_food" %}">
+                    <img src="{% media './media/icon/add-item.png' %}">
+                    </a>
+                    <a href="{% url "create_food" %}">Add food</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "create_dish" %}">
+                    <img src="{% media './media/icon/add-item.png' %}">
+                    </a>
+                    <a href="{% url "create_dish" %}">Add dish</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "user_profile" %}">
+                    <img src="{% media './media/icon/user-profile.png' %}">
+                    </a>
+                    <a href="{% url "user_profile" %}">My Profile</a>
+                </div>
+            </div>
+            <div id="header_right_column">
+                <div class="logout_button">
+                    <a href="{% url "logout" %}">Logout</a>
+                </div>
+            </div>
+            {% else %}
+            <div id="header_left_column">
+                <div id="logo-img" class="block">
+                    <a href="{% url "index" %}">
+                    <img src="{% media './media/logo/crab-logo.png' %}">
+                    </a>
+                </div>
+                <div id="logo-text" class="block">
+                    <p>
+                    <a href="{% url "index" %}">Potcrab Calorie Counter</a>
+                    </p>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "food_list" %}">
+                    <img src="{% media './media/icon/food.png' %}">
+                    </a>
+                    <a href="{% url "food_list" %}">Food List</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "dish_list" %}">
+                    <img src="{% media './media/icon/dish.png' %}">
+                    </a>
+                    <a href="{% url "dish_list" %}">Dish List</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "food_categories" %}">
+                    <img src="{% media './media/icon/dish.png' %}">
+                    </a>
+                    <a href="{% url "food_categories" %}">Food Categories</a>
+                </div>
+                <div id="second" class="block">
+                    <a href="{% url "dish_categories" %}">
+                    <img src="{% media './media/icon/categories.png' %}">
+                    </a>
+                    <a href="{% url "dish_categories" %}">Dish Categories</a>
+                </div>
+            </div>
+            <div id="header_right_column">
+                <div class="login_button">
+                    <a href="{% url "login" %}">Login</a>
+                </div>
+                <div class="register_button">
+                    <a href="{% url "register" %}">Create User</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+<!-- Main -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+<!-- Footer -->
+    <footer>
+        <p>&copy; 2023 PTU16 Potcrab Calorie Counter</p>
+    </footer>
+</body>
+</html>

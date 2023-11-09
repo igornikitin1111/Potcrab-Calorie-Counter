@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load media %}
+
+{% block title %}Add food{% endblock title %}
+
+{% block content %}
+<div id="create_food_box">
+    <div>
+        <h1>New food</h1>
+        <p>Fill in details below</p>
+    </div>
+    <div id="index_content">
+        <h2>Food List</h2>
+        <div id="food_list_content"></div>
+        <div id="food_list_content_pagenator"></div>
+        <h2>Dish List</h2>
+        <div id="dish_list_content"></div>
+        <div id="dish_list_content_pagenator"></div>
+    </div>
+</div>
+{% endblock %}
