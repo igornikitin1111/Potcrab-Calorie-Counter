@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 {% load static %}
-{% load media %}
 
 <html lang="en">
 <!-- Head -->
@@ -21,7 +20,7 @@
             <div id="header_left_column">
                 <div id="logo-img" class="block">
                     <a href="{% url "index" %}">
-                    <img src="{% media './media/logo/crab-logo.png' %}">
+                    <img src="{% static './media/logo/crab-logo.png' %}" class="logo">
                     </a>
                 </div>
                 <div id="logo-text" class="block">
@@ -30,46 +29,46 @@
                     </p>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "food_list" %}">
-                    <img src="{% media './media/icon/food.png' %}">
+                    <a href="{% url "food-list" %}">
+                    <img src="{% static './media/icon/food.png' %}">
                     </a>
-                    <a href="{% url "food_list" %}">Food List</a>
+                    <a href="{% url "food-list" %}">Food List</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "dish_list" %}">
-                    <img src="{% media './media/icon/dish.png' %}">
+                    <a href="{% url "dish-list" %}">
+                    <img src="{% static './media/icon/dish.png' %}">
                     </a>
-                    <a href="{% url "dish_list" %}">Dish List</a>
+                    <a href="{% url "dish-list" %}">Dish List</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "food_categories" %}">
-                    <img src="{% media './media/icon/dish.png' %}">
+                    <a href="{% url "food-categories" %}">
+                    <img src="{% static './media/icon/dish.png' %}">
                     </a>
-                    <a href="{% url "food_categories" %}">Food Categories</a>
+                    <a href="{% url "food-categories" %}">Food Categories</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "dish_categories" %}">
-                    <img src="{% media './media/icon/categories.png' %}">
+                    <a href="{% url "dish-categories" %}">
+                    <img src="{% static './media/icon/categories.png' %}">
                     </a>
-                    <a href="{% url "dish_categories" %}">Dish Categories</a>
+                    <a href="{% url "dish-categories" %}">Dish Categories</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "create_food" %}">
-                    <img src="{% media './media/icon/add-item.png' %}">
+                    <a href="{% url "create-food" %}">
+                    <img src="{% static './media/icon/add-item.png' %}">
                     </a>
-                    <a href="{% url "create_food" %}">Add food</a>
+                    <a href="{% url "create-food" %}">Add food</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "create_dish" %}">
-                    <img src="{% media './media/icon/add-item.png' %}">
+                    <a href="{% url "create-dish" %}">
+                    <img src="{% static './media/icon/add-item.png' %}">
                     </a>
-                    <a href="{% url "create_dish" %}">Add dish</a>
+                    <a href="{% url "create-dish" %}">Add dish</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "user_profile" %}">
-                    <img src="{% media './media/icon/user-profile.png' %}">
+                    <a href="{% url "user-profile" %}">
+                    <img src="{% static './media/icon/user-profile.png' %}">
                     </a>
-                    <a href="{% url "user_profile" %}">My Profile</a>
+                    <a href="{% url "user-profile" %}">My Profile</a>
                 </div>
             </div>
             <div id="header_right_column">
@@ -81,7 +80,7 @@
             <div id="header_left_column">
                 <div id="logo-img" class="block">
                     <a href="{% url "index" %}">
-                    <img src="{% media './media/logo/crab-logo.png' %}">
+                    <img src="{% static './media/logo/crab-logo.png' %}">
                     </a>
                 </div>
                 <div id="logo-text" class="block">
@@ -90,28 +89,28 @@
                     </p>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "food_list" %}">
-                    <img src="{% media './media/icon/food.png' %}">
+                    <a href="{% url "food-list" %}">
+                    <img src="{% static './media/icon/food.png' %}">
                     </a>
-                    <a href="{% url "food_list" %}">Food List</a>
+                    <a href="{% url "food-list" %}">Food List</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "dish_list" %}">
-                    <img src="{% media './media/icon/dish.png' %}">
+                    <a href="{% url "dish-list" %}">
+                    <img src="{% static './media/icon/dish.png' %}">
                     </a>
-                    <a href="{% url "dish_list" %}">Dish List</a>
+                    <a href="{% url "dish-list" %}">Dish List</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "food_categories" %}">
-                    <img src="{% media './media/icon/dish.png' %}">
+                    <a href="{% url "food-categories" %}">
+                    <img src="{% static './media/icon/dish.png' %}">
                     </a>
-                    <a href="{% url "food_categories" %}">Food Categories</a>
+                    <a href="{% url "food-categories" %}">Food Categories</a>
                 </div>
                 <div id="second" class="block">
-                    <a href="{% url "dish_categories" %}">
-                    <img src="{% media './media/icon/categories.png' %}">
+                    <a href="{% url "dish-categories" %}">
+                    <img src="{% static './media/icon/categories.png' %}">
                     </a>
-                    <a href="{% url "dish_categories" %}">Dish Categories</a>
+                    <a href="{% url "dish-categories" %}">Dish Categories</a>
                 </div>
             </div>
             <div id="header_right_column">
