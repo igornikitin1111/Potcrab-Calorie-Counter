@@ -1,17 +1,18 @@
 from django.shortcuts import render
-
+from .models import Food
 
 def index(request):
-    return render(request, "main/index-copy.html")
+    foods = Food.objects.all()
+    return render(request, "main/index.html", {'foods': foods})
 
 def about(request):
     return render(request, "main/about-us.html")
 
-def create_dish(request):
-    return render(request, "main/create-dish.html")
-
 def create_food(request):
     return render(request, "main/create-food.html")
+
+def create_dish(request):
+    return render(request, "main/create-dish.html")
 
 def dish_categories(request):
     return render(request, "main/dish-categories.html")
