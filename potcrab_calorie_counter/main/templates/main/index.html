@@ -8,12 +8,16 @@
 <div id="index_box">
     <div id="index_content">
         <h2>Food List</h2>
-        {% for product in foods %}
-            <div id="food_list_content">
-                <p>Food name: {{ product.name }}</p>
-                <p>Category: {{ product.category }}</p>
-                <p>Calories: {{ product.calories }}</p>
-        {% endfor %}
+        {% if foods %}
+            {% for product in foods %}
+                <div id="food_list_content">
+                    <p>Food name: {{ product.name }}</p>
+                    <p>Category: {{ product.category }}</p>
+                    <p>Calories: {{ product.calories }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Zero entries in food list.</p>
+        {% endif %}
         </div>
         <div id="food_list_content_pagenator">
             <p>Pagenator: 1, 2, 3, 4, 5 ...</p>

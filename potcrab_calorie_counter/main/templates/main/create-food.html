@@ -39,10 +39,11 @@
             <div>
                 <label for="food_category">Category:</label>
                 <select name="food_category" id="food_category">
-                    <option value="fruit">Fruit</option>
-                    <option value="meat">Meat</option>
-                    <option value="fish">Fish</option>
-                    <option value="vegetable">Vegetable</option>
+                    {% for category in food_categories2 %}
+                        <option value="{{ category.name }}">{{ category.name }}</option>
+                    {% empty %}
+                        <option value="-----">-----</option>
+                    {% endfor %}
                 </select>
             </div>
         </form>

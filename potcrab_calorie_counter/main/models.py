@@ -61,6 +61,9 @@ from django.utils.translation import gettext_lazy as _
 class FoodCategory(models.Model):
     name = models.CharField(_("name"), max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class Food(models.Model):
     name = models.CharField(_("Name"), max_length=50)
@@ -75,6 +78,9 @@ class Food(models.Model):
     fat = models.DecimalField(_("Fat"), max_digits=7, decimal_places=2)
     carbohydrates = models.DecimalField(_("Carbohydrates"), max_digits=7, decimal_places=2)
     recipe = models.TextField(_("Recipe"))
+
+    def __str__(self):
+        return self.name
 
 
 # class FoodLog(models.Model):

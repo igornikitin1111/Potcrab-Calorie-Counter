@@ -14,7 +14,9 @@ urlpatterns = [
     path('food-list/', views.create_food, name="food-list"),
 
     path('login/', views.login, name="login"),
+    path('logout/', views.logout, name="logout"),
     path('register/', views.register, name="register"),
+    path('user-profile/', views.user_profile, name="user-profile"),
     # path('user_profile/', views.UserProfileDetailView, name='user_profile'),
     # path('view_user_profile/<str:username>/', views.view_user_profile, name='view_user_profile'), 
     # # path('edit_user_profile/', views.UserProfileUpdateView, name='edit_user_profile'),
