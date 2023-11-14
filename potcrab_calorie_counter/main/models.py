@@ -70,7 +70,8 @@ class Food(models.Model):
     category = models.ForeignKey(
         FoodCategory, 
         verbose_name=_("Category"), 
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True
     )
     portion_weight = models.DecimalField(_("Portion weight (g)"), max_digits=7, decimal_places=2)
     calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)

@@ -6,46 +6,38 @@
 
 {% block content %}
 <div id="create_food_box">
-    <div id="create_food_title">
-        <h1>New food</h1>
-        <p>Fill in details below</p>
-    </div>
     <div id="create_food_form">
-        <form>
-            <div>
-                <label for="food_name">Food name:</label>
-                <input type="text" id="food_name" name="food_name" placeholder="Apple">
-            </div>
-            <div>
-                <label for="food_amount">Amount (g):</label>
-                <input type="text" id="food_amount" name="food_amount" placeholder="100">
-            </div>
-            <div>
-                <label for="food_calories">Calories (cal):</label>
-                <input type="text" id="food_calories" name="food_calories">
-            </div>
-            <div>
-                <label for="food_protein">Protein (g):</label>
-                <input type="text" id="food_protein" name="food_protein">
-            </div>
-            <div>
-                <label for="food_fat">Fat (g):</label>
-                <input type="text" id="food_fat" name="food_fat">
-            </div>
-            <div>
-                <label for="food_carbs">Carbs (g):</label>
-                <input type="text" id="food_carbs" name="food_carbs">
-            </div>
-            <div>
-                <label for="food_category">Category:</label>
-                <select name="food_category" id="food_category">
-                    {% for category in food_categories2 %}
-                        <option value="{{ category.name }}">{{ category.name }}</option>
-                    {% empty %}
-                        <option value="-----">-----</option>
-                    {% endfor %}
-                </select>
-            </div>
+        <form method='post'>
+            {% csrf_token %}
+            <h1>New food</h1>
+            <p>Fill in details below</p>
+            <span>{{ error }}</span><br>
+
+            <label for="form.name">Food name:</label>
+            {{ form.name }}<br>
+
+            <label for="food_category">Category:</label>
+            {{ form.category }}<br>
+
+            <label for="form.portion_weight">Amount (g):</label>
+            {{ form.portion_weight }}<br>
+
+            <label for="form.calories">Calories (cal):</label>
+            {{ form.calories }}<br>
+
+            <label for="form.protein">Protein (g):</label>
+            {{ form.protein }}<br>
+
+            <label for="form.fat">Fat (g):</label>
+            {{ form.fat }}<br>
+
+            <label for="food.carbohydrates">Carbohydrates (g):</label>
+            {{ form.carbohydrates }}<br>
+
+            <label for="form.recipe">Recipe:</label>
+            {{ form.recipe }}<br>
+
+            <button type="submit" class="btn btn-success">Add food</button>
         </form>
     </div>
 </div>

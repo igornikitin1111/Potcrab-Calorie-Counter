@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Food, FoodCategory
+from .forms import FoodForm
 
 def index(request):
     foods = Food.objects.order_by('id')
@@ -9,8 +10,23 @@ def about(request):
     return render(request, "main/about-us.html")
 
 def create_food(request):
+    error = ""
+    if request.method == 'POST':
+        form = FoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        else:
+            error = "Error in filling out form"
+
     food_categories2 = FoodCategory.objects.order_by('id')
-    return render(request, "main/create-food.html", {'food_categories2': food_categories2})
+    form = FoodForm()
+    context = {
+        'food_categories2': food_categories2,
+        'form': form,
+        'error': error,
+    }
+    return render(request, "main/create-food.html", context)
 
 def create_dish(request):
     return render(request, "main/create-dish.html")
