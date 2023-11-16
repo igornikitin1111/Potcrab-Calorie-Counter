@@ -6,46 +6,40 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
-# class Task(models.Model):
-#     title = models.CharField("Title", max_length=50)
-#     task = models.TextField("Description")
-
-#     def __str__(self):
-#         return self.title
-
-
-# class User(models.Model):
-#     first_name = models.CharField(_("First name"), max_length=50)
-#     last_name = models.CharField(_("Last name"), max_length=50)
-#     username = models.CharField(_("Username"), max_length=50)
-#     email = models.EmailField(_("E-mail"), max_length=254)
-#     current_weight = models.DecimalField(_("Current weight"), max_digits=5, decimal_places=2)
-#     current_calorie_goal = models.DecimalField(_("Current Calorie Goal"), max_digits=7, decimal_places=2)
+class User(models.Model):
+    username = models.CharField(_("Username"), max_length=50)
+    email = models.EmailField(_("E-mail"), max_length=254)
+    first_name = models.CharField(_("First name"), max_length=50)
+    last_name = models.CharField(_("Last name"), max_length=50)
+    # gender = 
+    height = models.DecimalField(_("Height (cm)"), max_digits=7, decimal_places=2)
+    weight = models.DecimalField(_("Weight (kg)"), max_digits=7, decimal_places=2)
 
 
-# class UserWeight(models.Model):
-#     user = models.ForeignKey(
-#         User, 
-#         verbose_name=_("user"), 
-#         on_delete=models.CASCADE
-#     )
-#     weight = models.DecimalField(_("weight"), max_digits=5, decimal_places=2)
-#     created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
+class UserWeight(models.Model):
+    user = models.ForeignKey(
+        User, 
+        verbose_name=_("user"), 
+        related_name='user',
+        on_delete=models.CASCADE,
+    )
+    weight = models.DecimalField(_("weight"), max_digits=5, decimal_places=2)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
 
 
 #class UserWeightGoal(models.Model):
 #   pass
 
 
-# class UserCalories(models.Model):
-#     user = models.ForeignKey(
-#         User, 
-#         verbose_name=_("user"), 
-#         on_delete=models.CASCADE
-#     )
-#     calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
-#     created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
-# #   calories_total_per_day DECIMAL NOT NULL,
+class UserCalories(models.Model):
+    user = models.ForeignKey(
+        User, 
+        verbose_name=_("user"), 
+        on_delete=models.CASCADE
+    )
+    calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
+    created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
+#   calories_total_per_day DECIMAL NOT NULL,
 
 
 # class UserCalorieGoal(models.Model):

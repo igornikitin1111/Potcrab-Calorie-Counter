@@ -5,4 +5,112 @@
 {% block title %}User profile{% endblock title %}
 
 {% block content %}
+<div id='userpage_left_column'>
+    <div id='userpage_details'>
+        <p>Hello, {{ User.username }}</p>
+        <p>E-mail: {{ User.email }}</p>
+        <p>First name: {{ User.username }}</p>
+        <p>Last name: {{ User.username }}</p>
+        {% comment %} <p>Gender: {{ User.gender }}</p> {% endcomment %}
+        <p>Height: {{ User.height }}</p>
+        <p>Weight: {{ User.weight }}</p>
+    </div>
+    <div id="userpage_weight">
+        <table>
+            <tr>
+                <td>Add/Update your weight</td>
+            </tr>
+            <tr>
+                <td>Date:</td>
+                <td>Weight(kg):</td>
+            </tr>
+            <tr>
+                <td>...01/01/2023...(only 1 weight on a specific date; 1 entry today)</td>
+                <td>...100...</td>
+                <td>...Update(button)...</td>
+            </tr>
+        </table>
+    </div>
+    <div id="userpage_weight_history">
+        ...Weight history graph...
+    </div>
+    <div id="userpage_weight_log">
+        ...Weight log...
+        Weight(kg): ... Date
+        --------------------
+        117             01/01/2023
+        116             02/01/2023
+        .......
+                paginator
+
+        <table>
+            <tr>
+                <td>Weight log</td>
+            </tr>
+            <tr>
+                <td>Weight (kg)</td>
+                <td>Date</td>
+            </tr>
+            {% for weight in weight_log %}
+                <tr>
+                    <td>{{ weight.weight }}</td>
+                    <td>{{ weight.created_at }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                Paginator 1 2 3 4
+            </tr>
+        </table>
+    </div>
+</div>
+<div id='userpage_right_column'>
+    <div id='userpage_calorie_goal'>
+        <table>
+            <tr>
+                <td>Update your calorie goal</td>
+            </tr>
+            <tr>
+                <td>Todays goal:</td>
+                <td>...latest calorie goal</td>
+            </tr>
+            <tr>
+                <td>...1000...(only 1 calorie goal on a specific date)</td>
+                <td>...Update(button)...</td>
+            </tr>
+        </table>
+    </div>
+    <div id='userpage_calorie_consumed_update'>
+        <table>
+            <tr>
+                <td>Update calories consumed</td>
+            </tr>
+            <tr>
+                <td>Date:</td>
+                <td>Pick food:</td>
+                <td>Weight(g):</td>
+            </tr>
+            <tr>
+                <td>...01/01/2023...</td>
+                <td>...Lasagna...</td>
+                <td>...500...</td>
+            </tr>
+            <tr>
+                <td>...Show food log...</td>
+                <td>...Update(button)...</td>
+            </tr>
+        </table>
+    </div>
+    <div id='userpage_calorie_consumed_history'>
+        ...Calorie history graph...
+    </div>
+    <div id='userpage_calorie_consumed_log'>
+        ...Calory log...
+        Calories(kcal) ... Date
+        --------------------
+        2700             01/01/2023
+        2000             02/01/2023
+        .......
+                paginator
+    </div>
+</div>
 {% endblock %}

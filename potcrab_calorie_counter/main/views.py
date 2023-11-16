@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Food, FoodCategory
+from .models import Food, FoodCategory, UserWeight
 from .forms import FoodForm
 from django.core.paginator import Paginator
 from django.db.models import Count
@@ -87,4 +87,8 @@ def register(request):
     return render(request, "registration/register.html")
 
 def user_profile(request):
-    return render(request, "user/user-profile.html")
+    weight = UserWeight.objects.order_by('-created_at')
+    context = {
+        'weight': weight,
+    }
+    return render(request, "user/user-profile.html", context)
