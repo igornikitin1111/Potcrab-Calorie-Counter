@@ -126,7 +126,12 @@ li {
     margin-bottom: 3rem;
 }
 
-/* ??? directory */
+/* media folder */
+.food_image {
+    width: 100px;
+    height: auto;
+}
+
 
 /* Styling the form */
 form {

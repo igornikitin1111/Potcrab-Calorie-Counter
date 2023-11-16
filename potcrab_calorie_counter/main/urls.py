@@ -10,8 +10,10 @@ urlpatterns = [
     path('create-food/', views.create_food, name="create-food"),
     path('dish-categories/', views.create_food, name="dish-categories"),
     path('dish-list/', views.create_food, name="dish-list"),
-    path('food-categories/', views.create_food, name="food-categories"),
+    path('food-categories/', views.food_categories, name="food-categories"),
     path('food-list/', views.create_food, name="food-list"),
+    path('show-food/<food_id>', views.show_food, name="show-food"),
+    path('show-food-categories/<category_id>', views.show_food_categories, name="show-food-categories"),
 
     path('login/', views.login, name="login"),
     path('logout/', views.logout, name="logout"),

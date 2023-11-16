@@ -69,7 +69,8 @@ class Food(models.Model):
     name = models.CharField(_("Name"), max_length=50)
     category = models.ForeignKey(
         FoodCategory, 
-        verbose_name=_("Category"), 
+        verbose_name=_("Category"),
+        related_name="food", 
         on_delete=models.CASCADE,
         null=True
     )
@@ -78,7 +79,8 @@ class Food(models.Model):
     protein = models.DecimalField(_("Protein"), max_digits=7, decimal_places=2)
     fat = models.DecimalField(_("Fat"), max_digits=7, decimal_places=2)
     carbohydrates = models.DecimalField(_("Carbohydrates"), max_digits=7, decimal_places=2)
-    recipe = models.TextField(_("Recipe"))
+    recipe = models.TextField(_("Recipe"), null=True, blank=True)
+    food_image = models.ImageField(null=True, blank=True, upload_to="food/")
 
     def __str__(self):
         return self.name

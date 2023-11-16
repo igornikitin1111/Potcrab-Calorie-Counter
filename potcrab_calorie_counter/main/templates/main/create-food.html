@@ -7,7 +7,7 @@
 {% block content %}
 <div id="create_food_box">
     <div id="create_food_form">
-        <form method='post'>
+        <form method='post' enctype="multipart/form-data">
             {% csrf_token %}
             <h1>New food</h1>
             <p>Fill in details below</p>
@@ -36,6 +36,9 @@
 
             <label for="form.recipe">Recipe:</label>
             {{ form.recipe }}<br>
+
+            <label for="form.food_image">Add food image:</label>
+            {{ form.food_image }}<br>
 
             <button type="submit" class="btn btn-success">Add food</button>
         </form>

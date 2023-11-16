@@ -28,17 +28,17 @@
                     <a href="{% url "index" %}">Potcrab Calorie Counter</a>
                     </p>
                 </div>
-                <div id="second" class="block">
+                {% comment %} <div id="second" class="block">
                     <a href="{% url "food-list" %}">
                     <img src="{% static './media/icon/food.png' %}" alt="Icon" class="logo">
                     </a>
                     <a href="{% url "food-list" %}">Food List</a>
-                </div>
+                </div> {% endcomment %}
                 <div id="second" class="block">
                     <a href="{% url "food-categories" %}">
                     <img src="{% static './media/icon/dish.png' %}" alt="Icon" class="logo">
                     </a>
-                    <a href="{% url "food-categories" %}">Categories</a>
+                    <a href="{% url "food-categories" %}">Food categories</a>
                 </div>
                 <div id="second" class="block">
                     <a href="{% url "create-food" %}">

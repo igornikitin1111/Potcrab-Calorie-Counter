@@ -1,10 +1,24 @@
 from django.shortcuts import render, redirect
 from .models import Food, FoodCategory
 from .forms import FoodForm
+from django.core.paginator import Paginator
+from django.db.models import Count
+
 
 def index(request):
-    foods = Food.objects.order_by('id')
-    return render(request, "main/index.html", {'foods': foods})
+    # foods = Food.objects.all().order_by('id')
+    foods = Food.objects.all().order_by('id')
+
+    p = Paginator(Food.objects.all(), 2)
+    page = request.GET.get('page')
+    foods2 = p.get_page(page)
+
+    context = {
+        'foods': foods,
+        'foods2': foods2,
+        }
+
+    return render(request, "main/index.html", context)
 
 def about(request):
     return render(request, "main/about-us.html")
@@ -28,17 +42,37 @@ def create_food(request):
     }
     return render(request, "main/create-food.html", context)
 
+def show_food(request, food_id):
+    food = Food.objects.get(pk=food_id)
+    context = {
+        'food':food,
+    }
+    return render(request, "main/show-food.html", context)
+
 def create_dish(request):
     return render(request, "main/create-dish.html")
 
-def dish_categories(request):
-    return render(request, "main/dish-categories.html")
+# def dish_categories(request):
+#     return render(request, "main/dish-categories.html")
 
-def dish_list(request):
-    return render(request, "main/dish-list.html")
+# def dish_list(request):
+#     return render(request, "main/dish-list.html")
 
 def food_categories(request):
-    return render(request, "main/food-categories.html")
+    categories = FoodCategory.objects.order_by('id')
+    food_in_category_count = Food.objects.annotate(Count("category"))
+    context = {
+        'categories': categories,
+        'food_in_category_count': food_in_category_count,
+    }
+    return render(request, "main/food-categories.html", context)
+
+def show_food_categories(request, category_id):
+    category = FoodCategory.objects.get(pk=category_id)
+    context = {
+        'category': category,
+    }
+    return render(request, "main/show-food-categories.html", context)
 
 def food_list(request):
     return render(request, "main/food-list.html")

@@ -8,14 +8,15 @@
 <div id="food_category_box">
     <div id="food_category_title">
         <h2>Browse food by category</h2>
-    </div>
-    <div id="food_category_title">
-        <h2>Food List</h2>
-        <div id="food_list_content"></div>
-        <div id="food_list_content_pagenator"></div>
-        <h2>Dish List</h2>
-        <div id="dish_list_content"></div>
-        <div id="dish_list_content_pagenator"></div>
+        {% for category in categories %}
+            <table style="width:100%">
+                <td>
+                    <a>
+                    {{ category.name }} {% if category.food.count %}({{ category.food.count }}){% endif %}
+                    </a>
+                </td>
+            </table>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

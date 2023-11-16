@@ -9,7 +9,7 @@ class FoodForm(forms.ModelForm):
         fields = [
             'name', 'category', 'portion_weight', 
             'calories', 'protein', 'fat', 
-            'carbohydrates', 'recipe',
+            'carbohydrates', 'recipe', 'food_image',
             ]
         recipe_placeholder = """For 1 kg of lasagna you need:
 1 pound sweet Italian sausage

@@ -7,20 +7,39 @@
 {% block content %}
 <div id="index_box">
     <div id="index_content">
-        <h2>Food List</h2>
+        <div id="index_search_bar">
+            <h3>Food database</h3>
+            <p>Enter a food or brand name</p>
+        </div>
+        <div id="food_list"></div>
+        <h3>Food List</h3>
         {% if foods %}
-            {% for product in foods %}
+            {% for product in foods2 %}
                 <div id="food_list_content">
                     <p>Food name: {{ product.name }}</p>
                     <p>Category: {{ product.category }}</p>
                     <p>Calories: {{ product.calories }}</p>
+                    <p><a href="{% url 'show-food' product.id %}">View details</a>
+                    {% if product.food_image %}
+                        <img src="{{ product.food_image.url }}" alt="food_image" class="food_image" width="100px" height="auto">
+                    {% endif %}
             {% endfor %}
         {% else %}
             <p>Zero entries in food list.</p>
         {% endif %}
         </div>
         <div id="food_list_content_pagenator">
-            <p>Pagenator: 1, 2, 3, 4, 5 ...</p>
+            {% if foods2.has_previous %}
+                <a href="?page=1">&laquo First</a>
+                <a href="?page={{ foods2.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            Page {{ foods2.number }} of {{ foods2.paginator.num_pages }}
+
+            {% if foods2.has_next %}
+                <a href="?page={{ foods2.next_page_number }}">next</a>
+                <a href="?page={{ foods2.paginator.num_pages }}">Last &raquo</a>
+            {% endif %}
         </div>
     </div>
 </div>
