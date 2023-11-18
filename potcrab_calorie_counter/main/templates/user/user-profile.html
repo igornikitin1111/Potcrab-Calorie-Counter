@@ -16,13 +16,11 @@
         <p>Weight: {{ User.weight }}</p>
     </div>
     <br><br>
-    <div id="userpage_weight">
+    <div>
+        <h3>Add/Update your weight</h3>
         <form method="post" action="{% url  'user-profile' %}">
             {% csrf_token %}
-            <table>
-                <tr>
-                    <th>Add/Update your weight</th>
-                </tr>
+            <table class='table table-bordered table-light'>
                 <tr>
                     <th>Date:</th>
                     <th>Weight(kg):</th>
@@ -41,12 +39,15 @@
                         <td>{{ field.created_at }}</td>
                         <td>{{ field.weight }}</td>
                         <td>
-                            <button formnovalidate name='edit' value={{ field.id }}>Edit</button>
-                            <button formnovalidate name='delete' value={{ field.id }}>Delete</button>
+                            <button formnovalidate name='edit' class='btn btn-outline-warning' value={{ field.id }}>Edit</button>
+                            <button formnovalidate name='delete' class='btn btn-outline-danger' value={{ field.id }}>Delete</button>
                         </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
+                <tr>
+                    <td><a href="{% url "show-weight" %}">View all entries</a></td>
+                </tr>
             </table>
         </form>
     </div>
@@ -54,51 +55,27 @@
     <div id="userpage_weight_history">
         ...Weight history graph...
     </div>
-    <div id="userpage_weight_log">
-        ...Weight log...
-        Weight(kg): ... Date
-        --------------------
-        117             01/01/2023
-        116             02/01/2023
-        .......
-                paginator
-
-        <table>
-            <tr>
-                <td>Weight log</td>
-            </tr>
-            <tr>
-                <td>Weight (kg)</td>
-                <td>Date</td>
-            </tr>
-            {% for weight in weight_log %}
-                <tr>
-                    <td>{{ weight.weight }}</td>
-                    <td>{{ weight.created_at }}</td>
-                </tr>
-            {% endfor %}
-            <tr>
-                Paginator 1 2 3 4
-            </tr>
-        </table>
-    </div>
 </div>
 <div id='userpage_right_column'>
-    <div id='userpage_calorie_goal'>
-        <table>
-            <tr>
-                <td>Update your calorie goal</td>
-            </tr>
-            <tr>
-                <td>Todays goal:</td>
-                <td>...latest calorie goal</td>
-            </tr>
-            <tr>
-                <td>...1000...(only 1 calorie goal on a specific date)</td>
-                <td>...Update(button)...</td>
-            </tr>
-        </table>
+    <div>
+        <form>
+            <h3>Update calorie goal</h3>
+            <table>
+                <tr>
+                    <td>Todays goal:</td>
+                    <td>{{ calorie_goal }}</td>
+                </tr>
+                <tr>
+                    <td>{{ calorie_goal_form.calorie_goal }}</td>
+                    <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
+                </tr>
+                <tr>
+                    <td><a href="{% url "show-calorie-goal" %}">View all entries</a></td>
+                </tr>
+            </table>
+        </form>
     </div>
+
     <div id='userpage_calorie_consumed_update'>
         <table>
             <tr>

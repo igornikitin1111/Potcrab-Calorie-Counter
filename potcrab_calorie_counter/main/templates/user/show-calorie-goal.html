@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Calorie goal history{% endblock title %}
+
+{% block content %}
+<div>
+    <h3>Add/Update your calorie goal</h3>
+    <form method="post" action="{% url  'show-calorie-goal' %}">
+        {% csrf_token %}
+        <table class='table table-bordered table-light'>
+            <tr>
+                <td>Todays goal:</td>
+                <td>{{ calorie_goal[0] }}</td>
+            </tr>
+            {% if not calorie_goal_form.instance.id %}
+            <tr>
+                <td>{{ calorie_goal_form.calorie_goal }}</td>
+                <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
+            </tr>
+            {% endif %}
+            {% for field in calorie_goal %}
+                <tr>
+                    {% if calorie_goal_form.instance.id == field.id %}
+                    <td>{{ calorie_goal_form.calorie_goal }}</td>
+                    <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ field.id }}'>Save</button></td>
+                    {% else %}
+                    <td>{{ field.created_at }}</td>
+                    <td>{{ field.calorie_goal }}</td>
+                    <td>
+                        <button formnovalidate name='edit' class='btn btn-outline-warning' value={{ field.id }}>Edit</button>
+                        <button formnovalidate name='delete' class='btn btn-outline-danger' value={{ field.id }}>Delete</button>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</div>
+{% endblock %}

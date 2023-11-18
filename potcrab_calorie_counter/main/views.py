@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Food, FoodCategory, UserWeight
-from .forms import FoodForm, UserWeightForm
+from .models import Food, FoodCategory, UserWeight, UserCalorieGoal
+from .forms import FoodForm, UserWeightForm, UserCalorieGoalForm
 from django.core.paginator import Paginator
 from django.db.models import Count
 
@@ -88,8 +88,9 @@ def register(request):
 
 def user_profile(request):
     context = {}
+    # Weight
     weight_form = UserWeightForm()
-    weight = UserWeight.objects.all()
+    weight = UserWeight.objects.order_by('-created_at')
     context['weight']=weight
     if request.method == 'POST':
         if 'save' in request.POST:
@@ -110,4 +111,68 @@ def user_profile(request):
             weight = UserWeight.objects.get(id=pk)
             weight_form = UserWeightForm(instance=weight)
     context['weight_form']=weight_form
+
+    # Calorie Goal 
+    calorie_goal_form = UserCalorieGoalForm()
+    calorie_goal = UserCalorieGoal.objects.order_by('-created_at')
+    context['calorie_goal']=calorie_goal
+    if request.method == 'POST':
+        if 'save' in request.POST:
+            calorie_goal_form.save()
+            calorie_goal_form = UserCalorieGoalForm()
+    context['calorie_goal_form']=calorie_goal_form
+
+
     return render(request, "user/user-profile.html", context)
+
+def show_weight(request):
+    context = {}
+    weight_form = UserWeightForm()
+    weight = UserWeight.objects.order_by('-created_at')
+    context['weight']=weight
+    if request.method == 'POST':
+        if 'save' in request.POST:
+            pk = request.POST.get('save')
+            if not pk:
+                weight_form = UserWeightForm(request.POST)
+            else:
+                weight = UserWeight.objects.get(id=pk)
+                weight_form = UserWeightForm(request.POST, instance=weight)
+            weight_form.save()
+            weight_form = UserWeightForm()
+        elif 'delete' in request.POST:
+            pk = request.POST.get('delete')
+            weight = UserWeight.objects.get(id=pk)
+            weight.delete()
+        elif 'edit' in request.POST:
+            pk = request.POST.get('edit')
+            weight = UserWeight.objects.get(id=pk)
+            weight_form = UserWeightForm(instance=weight)
+    context['weight_form']=weight_form
+    return render(request, "user/show-weight.html", context)
+
+def show_calorie_goal(request):
+    context = {}
+    calorie_goal_form = UserCalorieGoalForm()
+    calorie_goal = UserCalorieGoal.objects.latest('-created_at')
+    context['calorie_goal']=calorie_goal
+    if request.method == 'POST':
+        if 'save' in request.POST:
+            pk = request.POST.get('save')
+            if not pk:
+                calorie_goal_form = UserCalorieGoalForm(request.POST)
+            else:
+                calorie_goal = UserCalorieGoal.objects.get(id=pk)
+                calorie_goal_form = UserCalorieGoalForm(request.POST, instance=calorie_goal)
+            calorie_goal_form.save()
+            calorie_goal_form = UserCalorieGoalForm()
+        elif 'delete' in request.POST:
+            pk = request.POST.get('delete')
+            calorie_goal = UserCalorieGoal.objects.get(id=pk)
+            calorie_goal.delete()
+        elif 'edit' in request.POST:
+            pk = request.POST.get('edit')
+            calorie_goal = UserCalorieGoal.objects.get(id=pk)
+            calorie_goal_form = UserCalorieGoalForm(instance=calorie_goal)
+    context['calorie_goal_form']=calorie_goal_form
+    return render(request, "user/show-weight.html", context)

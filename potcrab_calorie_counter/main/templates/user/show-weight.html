@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Weight history{% endblock title %}
+
+{% block content %}
+<div>
+    <h3>Add/Update your weight</h3>
+    <form method="post" action="{% url  'show-weight' %}">
+        {% csrf_token %}
+        <table class='table table-bordered table-light'>
+            <tr>
+                <th>Date:</th>
+                <th>Weight(kg):</th>
+                <th></th>
+            </tr>
+            {% if not weight_form.instance.id %}
+            <tr>
+                {% include "user/save.html" %}
+            </tr>
+            {% endif %}
+            {% for field in weight %}
+                <tr>
+                    {% if weight_form.instance.id == field.id %}
+                    {% include "user/save.html" %}
+                    {% else %}
+                    <td>{{ field.created_at }}</td>
+                    <td>{{ field.weight }}</td>
+                    <td>
+                        <button formnovalidate name='edit' class='btn btn-outline-warning' value={{ field.id }}>Edit</button>
+                        <button formnovalidate name='delete' class='btn btn-outline-danger' value={{ field.id }}>Delete</button>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</div>
+{% endblock %}

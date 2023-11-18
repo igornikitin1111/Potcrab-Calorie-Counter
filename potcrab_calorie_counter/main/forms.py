@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Food, UserWeight
+from .models import Food, UserWeight, UserCalorieGoal
 
 
 class FoodForm(forms.ModelForm):
@@ -48,4 +48,12 @@ class UserWeightForm(forms.ModelForm):
         model = UserWeight
         fields = [
             'weight', 'created_at',
+        ]
+
+
+class UserCalorieGoalForm(forms.ModelForm):
+    class Meta:
+        model = UserCalorieGoal
+        fields = [
+            'calorie_goal', 'created_at',
         ]

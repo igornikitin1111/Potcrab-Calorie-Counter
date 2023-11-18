@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+
 
 # Create your models here.
 
@@ -32,24 +34,24 @@ class UserWeight(models.Model):
 
 
 class UserCalories(models.Model):
-    user = models.ForeignKey(
-        User, 
-        verbose_name=_("user"), 
-        on_delete=models.CASCADE
-    )
+    # user = models.ForeignKey(
+    #     User, 
+    #     verbose_name=_("user"), 
+    #     on_delete=models.CASCADE
+    # )
     calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
 #   calories_total_per_day DECIMAL NOT NULL,
 
 
-# class UserCalorieGoal(models.Model):
-#     user = models.ForeignKey(
-#         User, 
-#         verbose_name=_("user"), 
-#         on_delete=models.CASCADE
-#     )
-#     calorie_goal = models.DecimalField(_("Calorie goal"), max_digits=7, decimal_places=2)
-#     created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
+class UserCalorieGoal(models.Model):
+    # user = models.ForeignKey(
+    #     User, 
+    #     verbose_name=_("user"), 
+    #     on_delete=models.CASCADE
+    # )
+    calorie_goal = models.DecimalField(_("Calorie goal"), max_digits=7, decimal_places=2)
+    created_at = models.DateTimeField(_("created at"), default=timezone.now , db_index=True)
 
 
 class FoodCategory(models.Model):
