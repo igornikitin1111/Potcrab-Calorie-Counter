@@ -15,22 +15,42 @@
         <p>Height: {{ User.height }}</p>
         <p>Weight: {{ User.weight }}</p>
     </div>
+    <br><br>
     <div id="userpage_weight">
-        <table>
-            <tr>
-                <td>Add/Update your weight</td>
-            </tr>
-            <tr>
-                <td>Date:</td>
-                <td>Weight(kg):</td>
-            </tr>
-            <tr>
-                <td>...01/01/2023...(only 1 weight on a specific date; 1 entry today)</td>
-                <td>...100...</td>
-                <td>...Update(button)...</td>
-            </tr>
-        </table>
+        <form method="post" action="{% url  'user-profile' %}">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th>Add/Update your weight</th>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <th>Weight(kg):</th>
+                    <th></th>
+                </tr>
+                {% if not weight_form.instance.id %}
+                <tr>
+                    {% include "user/save.html" %}
+                </tr>
+                {% endif %}
+                {% for field in weight %}
+                    <tr>
+                        {% if weight_form.instance.id == field.id %}
+                        {% include "user/save.html" %}
+                        {% else %}
+                        <td>{{ field.created_at }}</td>
+                        <td>{{ field.weight }}</td>
+                        <td>
+                            <button formnovalidate name='edit' value={{ field.id }}>Edit</button>
+                            <button formnovalidate name='delete' value={{ field.id }}>Delete</button>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </form>
     </div>
+    <br><br>
     <div id="userpage_weight_history">
         ...Weight history graph...
     </div>

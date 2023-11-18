@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Food, FoodCategory, UserWeight
-from .forms import FoodForm
+from .forms import FoodForm, UserWeightForm
 from django.core.paginator import Paginator
 from django.db.models import Count
 
@@ -87,8 +87,27 @@ def register(request):
     return render(request, "registration/register.html")
 
 def user_profile(request):
-    weight = UserWeight.objects.order_by('-created_at')
-    context = {
-        'weight': weight,
-    }
+    context = {}
+    weight_form = UserWeightForm()
+    weight = UserWeight.objects.all()
+    context['weight']=weight
+    if request.method == 'POST':
+        if 'save' in request.POST:
+            pk = request.POST.get('save')
+            if not pk:
+                weight_form = UserWeightForm(request.POST)
+            else:
+                weight = UserWeight.objects.get(id=pk)
+                weight_form = UserWeightForm(request.POST, instance=weight)
+            weight_form.save()
+            weight_form = UserWeightForm()
+        elif 'delete' in request.POST:
+            pk = request.POST.get('delete')
+            weight = UserWeight.objects.get(id=pk)
+            weight.delete()
+        elif 'edit' in request.POST:
+            pk = request.POST.get('edit')
+            weight = UserWeight.objects.get(id=pk)
+            weight_form = UserWeightForm(instance=weight)
+    context['weight_form']=weight_form
     return render(request, "user/user-profile.html", context)

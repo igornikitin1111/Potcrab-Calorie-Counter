@@ -17,14 +17,14 @@ class User(models.Model):
 
 
 class UserWeight(models.Model):
-    user = models.ForeignKey(
-        User, 
-        verbose_name=_("user"), 
-        related_name='user',
-        on_delete=models.CASCADE,
-    )
+    # user = models.ForeignKey(
+    #     User, 
+    #     verbose_name=_("user"), 
+    #     related_name='user',
+    #     on_delete=models.CASCADE,
+    # )
+    created_at = models.DateTimeField(_("created at"), db_index=True)
     weight = models.DecimalField(_("weight"), max_digits=5, decimal_places=2)
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
 
 
 #class UserWeightGoal(models.Model):
