@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Food log{% endblock title %}
+
+{% block content %}
+<div id="food_log_left_column">
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Select time of the day:</th>
+            </tr>
+            <tr>
+                <td>...Breakfast/Lunch/Dinner...</td>
+            </tr>
+            <tr>
+                <th>Write food name: </th>
+            </tr>
+            <tr>
+                <td>...Apple...</td>
+            </tr>
+            <tr>
+                <th>Write amount (g/ml):</th>
+            </tr>
+            <tr>
+                <td>...100...</td>
+            </tr>
+            <tr>
+                <td>
+                    <button name='add'>Add</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <form>
+        {% csrf_token %}
+        <h2>Todays meals:</h2>
+        <p>{% now "DATE_FORMAT" %}</p>
+        <table>
+            <tr>
+                <th>Time of the day</th>
+                <th>Food</th>
+                <th>Amount (g/ml)</th>
+                <th>Calories(cal)</th>
+                <th>Protein (g)</th>
+                <th>Fat (g)</th>
+                <th>Carbs (g)</th>
+                <th></th>
+            </tr>
+            ...for cycle (filter for today)...
+            <tr>
+                <td>...Breakfast...</td>
+                <td>...Apple...</td>
+                <td>...100...</td>
+                <td>...111...</td>
+                <td>...15...</td>
+                <td>...15...</td>
+                <td>...15...</td>
+                <td>
+                    <button formnovalidate name='edit' class='btn btn-outline-warning' value='...'>Edit</button>
+                    <button formnovalidate name='delete' class='btn btn-outline-danger' value='...'>Delete</button>
+                </td>
+            </tr>
+            ...endfor cycle...
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td>...100...</td>
+                <td>...111...</td>
+                <td>...15...</td>
+                <td>...15...</td>
+                <td>...15...</td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="food_log_right_column">
+    <div id="pie chart">
+        <h2>Today's calorie breakdown</h2>
+        <p>...Pie chart...</p>
+        <p>Protein: ...16...</p>
+        <p>Fat: ...16...</p>
+        <p>Carbs: ...16...</p>
+        <p>Total calories: ...600.../...3000(dailie calorie goal)...</p>
+    </div>
+    <div id="calorie_goal">
+        <h2>Update calorie goal</h2>
+        <p>(Today's calorie goal: ...3000 kcal...)</p>
+        <p>...3000...</p>
+        <p>...button(update)...</p>
+    </div>
+    <div id="current_weight">
+        <h2>Update current weight</h2>
+        <p>(Today's weight: ...100...kg)</p>
+        <p>...100...</p>
+        <p>...button(update)...</p>
+    </div>
+</div>
+{% endblock %}

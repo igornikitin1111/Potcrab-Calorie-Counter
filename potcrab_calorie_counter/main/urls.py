@@ -3,22 +3,23 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+# index page
     path('', views.index, name="index"),
-
+# main folder
     path('about-us/', views.about, name="about-us"),
     path('create-dish/', views.create_dish, name="create-dish"),
     path('create-food/', views.create_food, name="create-food"),
     path('dish-categories/', views.create_food, name="dish-categories"),
     path('dish-list/', views.create_food, name="dish-list"),
     path('food-categories/', views.food_categories, name="food-categories"),
-    path('food-list/', views.create_food, name="food-list"),
+    path('food-log/', views.food_log, name="food-log"),
     path('show-food/<food_id>', views.show_food, name="show-food"),
     path('show-food-categories/<category_id>', views.show_food_categories, name="show-food-categories"),
-
-    path('login/', views.login, name="login"),
-    path('logout/', views.logout, name="logout"),
-    path('register/', views.register, name="register"),
-    
+# registration folder
+    path('login/', views.login_user, name="login"),
+    path('logout/', views.logout_user, name="logout"),
+    path('register/', views.register_user, name="register"),
+# user folder
     path('user-profile/', views.user_profile, name="user-profile"),
     path('show-weight/', views.show_weight, name='show-weight'),
     path('show-weight-chart/', views.weight_chart, name='show-weight-chart'),

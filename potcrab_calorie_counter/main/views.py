@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from .models import Food, FoodCategory, UserWeight, UserCalorieGoal
-from .forms import FoodForm, UserWeightForm, UserWeightDateForm, UserCalorieGoalForm
+from .forms import FoodForm, UserWeightForm, UserWeightDateForm, UserCalorieGoalForm, SignUpForm
 from django.core.paginator import Paginator
 from django.db.models import Count
 import plotly.express as px
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from django.contrib import messages
 
 
 def index(request):
@@ -75,17 +80,11 @@ def show_food_categories(request, category_id):
     }
     return render(request, "main/show-food-categories.html", context)
 
-def food_list(request):
-    return render(request, "main/food-list.html")
+def food_log(request):
+    context = {}
+    
+    return render(request, "main/food-log.html", context)
 
-def login(request):
-    return render(request, "registration/login.html")
-
-def logout(request):
-    return render(request, "registration/logout.html")
-
-def register(request):
-    return render(request, "registration/register.html")
 
 def user_profile(request):
     context = {}
@@ -211,3 +210,49 @@ def show_calorie_goal(request):
             calorie_goal_form = UserCalorieGoalForm(instance=calorie_goal)
     context['calorie_goal_form']=calorie_goal_form
     return render(request, "user/show-weight.html", context)
+
+# Register folder ------
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(
+            request, 
+            username=username, 
+            password=password
+        )
+        if user is not None:
+            login(request, user)
+            messages.success(request, ("You have been logged in!"))
+            return redirect('index')
+        else:
+            messages.success(request, ("There was an error. Please try again..."))
+            return redirect('login')
+    else:
+        return render(request, 'registration/login.html', {})
+
+def logout_user(request):
+    logout(request)
+    messages.success(
+        request, 
+        ("You have been logged out. Have a nice day!")
+    )
+    return redirect("index")
+
+def register_user(request):
+    form = SignUpForm()
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, ("You have succesfully registered. Welcome to the club, buddy!"))
+            return redirect("index")
+        else:
+            messages.success(request, ("There was a problem registering. Please try again"))
+            return redirect("register")
+    else:
+        return render(request, "registration/register.html", {'form':form})
