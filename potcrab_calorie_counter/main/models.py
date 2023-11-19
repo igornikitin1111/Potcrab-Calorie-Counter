@@ -25,9 +25,11 @@ class UserWeight(models.Model):
     #     related_name='user',
     #     on_delete=models.CASCADE,
     # )
-    created_at = models.DateTimeField(_("created at"), db_index=True)
+    created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
     weight = models.DecimalField(_("weight"), max_digits=5, decimal_places=2)
 
+    class Meta:
+        ordering = ('-created_at',)
 
 #class UserWeightGoal(models.Model):
 #   pass
@@ -40,8 +42,17 @@ class UserCalories(models.Model):
     #     on_delete=models.CASCADE
     # )
     calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
-    created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
-#   calories_total_per_day DECIMAL NOT NULL,
+    created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
+
+
+class UserCaloriesTotal(models.Model):
+    # user = models.ForeignKey(
+    #     User, 
+    #     verbose_name=_("user"), 
+    #     on_delete=models.CASCADE
+    # )
+    calories_total = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
+    created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
 
 
 class UserCalorieGoal(models.Model):
@@ -51,7 +62,7 @@ class UserCalorieGoal(models.Model):
     #     on_delete=models.CASCADE
     # )
     calorie_goal = models.DecimalField(_("Calorie goal"), max_digits=7, decimal_places=2)
-    created_at = models.DateTimeField(_("created at"), default=timezone.now , db_index=True)
+    created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
 
 
 class FoodCategory(models.Model):

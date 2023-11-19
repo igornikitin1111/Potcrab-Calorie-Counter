@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import Food, FoodCategory, UserWeight, UserCalorieGoal
-from .forms import FoodForm, UserWeightForm, UserCalorieGoalForm
+from .forms import FoodForm, UserWeightForm, UserWeightDateForm, UserCalorieGoalForm
 from django.core.paginator import Paginator
 from django.db.models import Count
+import plotly.express as px
 
 
 def index(request):
@@ -150,6 +151,40 @@ def show_weight(request):
             weight_form = UserWeightForm(instance=weight)
     context['weight_form']=weight_form
     return render(request, "user/show-weight.html", context)
+
+def weight_chart(request):
+    weight = UserWeight.objects.all()
+    start = request.GET.get('start') 
+    end = request.GET.get('end')
+
+    if start:
+        weight = weight.filter(created_at__gte=start)
+    if end:
+        weight = weight.filter(created_at__lte=end)
+
+    fig = px.line(
+        x=[w.created_at for w in weight],
+        y=[w.weight for w in weight],
+        title='Weight chart',
+        labels={
+            'x': 'Date',
+            'y': 'Weight'
+        }
+    )
+
+    fig.update_layout(title={
+        'font_size': 22,
+        'xanchor': 'center',
+        'x': 0.5
+    })
+
+    chart = fig.to_html()
+
+    context = {
+        'chart': chart,
+        'form': UserWeightDateForm(),
+        }
+    return render(request, 'user/show-weight-chart.html', context)
 
 def show_calorie_goal(request):
     context = {}

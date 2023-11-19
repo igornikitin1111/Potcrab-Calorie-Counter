@@ -51,6 +51,15 @@ class UserWeightForm(forms.ModelForm):
         ]
 
 
+class UserWeightDateForm(forms.Form):
+    start = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'})
+        )
+    end = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'})
+        )
+
+
 class UserCalorieGoalForm(forms.ModelForm):
     class Meta:
         model = UserCalorieGoal
