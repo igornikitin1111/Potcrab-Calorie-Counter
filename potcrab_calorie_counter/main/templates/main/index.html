@@ -17,13 +17,13 @@
         <div class="container">
             <div class="row row-cols-3">
             {% for product in foods2 %}
-                <div class="col bg-secondary-subtle"> 
-                    <div class="col">
+                <div class="col"> 
+                    <div class="col bg-white">
                         {% if product.food_image %}
                             <img src="{{ product.food_image.url }}" alt="food_image" class="food_image" width="250px" height="auto">
                         {% endif %}
                     </div>
-                    <div class="col">
+                    <div class="col bg-white">
                         <p>Food name: {{ product.name }}</p>
                         <p>Category: {{ product.category }}</p>
                         <p>Calories: {{ product.calories }}</p>
