@@ -5,8 +5,8 @@
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
 
 {% block content %}
-<div id="index_box">
-    <div id="index_content">
+<div class="container">
+    <div class="container">
         <div id="index_search_bar">
             <h3>Food database</h3>
             <p>Enter a food or brand name</p>
@@ -14,16 +14,25 @@
         <div id="food_list"></div>
         <h3>Food List</h3>
         {% if foods %}
+        <div class="container">
+            <div class="row row-cols-3">
             {% for product in foods2 %}
-                <div id="food_list_content">
-                    <p>Food name: {{ product.name }}</p>
-                    <p>Category: {{ product.category }}</p>
-                    <p>Calories: {{ product.calories }}</p>
-                    <p><a href="{% url 'show-food' product.id %}">View details</a>
-                    {% if product.food_image %}
-                        <img src="{{ product.food_image.url }}" alt="food_image" class="food_image" width="100px" height="auto">
-                    {% endif %}
+                <div class="col bg-secondary-subtle"> 
+                    <div class="col">
+                        {% if product.food_image %}
+                            <img src="{{ product.food_image.url }}" alt="food_image" class="food_image" width="250px" height="auto">
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        <p>Food name: {{ product.name }}</p>
+                        <p>Category: {{ product.category }}</p>
+                        <p>Calories: {{ product.calories }}</p>
+                        <p><a href="{% url 'show-food' product.id %}">View details</a>
+                    </div>
+                </div>
             {% endfor %}
+            </div>
+        </div>
         {% else %}
             <p>Zero entries in food list.</p>
         {% endif %}

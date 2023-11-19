@@ -15,7 +15,7 @@ def index(request):
     # foods = Food.objects.all().order_by('id')
     foods = Food.objects.all().order_by('id')
 
-    p = Paginator(Food.objects.all(), 2)
+    p = Paginator(Food.objects.all(), 3)
     page = request.GET.get('page')
     foods2 = p.get_page(page)
 
