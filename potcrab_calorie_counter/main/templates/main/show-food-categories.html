@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Category - {{ category1|title }}{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="container px-4 text-left">
+        <div class="row align-items-start">
+            <div class="col">
+                <h1>Category - {{ Food.food }}</h1>
+                <ul>
+                    {% for food in category %}
+                        <li>Food: {{ food.name }} 
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+<div>
+{% endblock %}
+

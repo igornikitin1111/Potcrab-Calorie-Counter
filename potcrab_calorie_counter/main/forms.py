@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Food, FoodLog, UserWeight, UserCalorieGoal
+from .models import Food, FoodLog, UserWeight, UserCaloriesGoal
 
 
 class SignUpForm(UserCreationForm):
@@ -102,9 +102,9 @@ class UserWeightDateForm(forms.Form):
         )
 
 
-class UserCalorieGoalForm(forms.ModelForm):
+class UserCaloriesGoalForm(forms.ModelForm):
     class Meta:
-        model = UserCalorieGoal
+        model = UserCaloriesGoal
         fields = [
-            'calorie_goal', 'created_at',
+            'calories',
         ]

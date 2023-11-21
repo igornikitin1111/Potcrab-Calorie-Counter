@@ -13,23 +13,23 @@
                 <th>Select time of the day:</th>
             </tr>
             <tr>
-                <td>...Breakfast/Lunch/Dinner...</td>
+                <td>{{ food_log_form.time_of_day }}</td>
             </tr>
             <tr>
-                <th>Write food name: </th>
+                <th>Select food: </th>
             </tr>
             <tr>
-                <td>...Apple...</td>
+                <td>{{ food_log_form.food }}</td>
             </tr>
             <tr>
                 <th>Write amount (g/ml):</th>
             </tr>
             <tr>
-                <td>...100...</td>
+                <td>{{ food_log_form.food_amount }}</td>
             </tr>
             <tr>
                 <td>
-                    <button name='add'>Add</button>
+                    <button name='food_log_add'>Add</button>
                 </td>
             </tr>
         </table>
@@ -78,25 +78,38 @@
     </form>
 </div>
 <div id="food_log_right_column">
-    <div id="pie chart">
+    {% comment %} <div id="pie chart">
         <h2>Today's calorie breakdown</h2>
         <p>...Pie chart...</p>
         <p>Protein: ...16...</p>
         <p>Fat: ...16...</p>
         <p>Carbs: ...16...</p>
         <p>Total calories: ...600.../...3000(dailie calorie goal)...</p>
+    </div> {% endcomment %}
+    <div class="container">
+        <h3>Update calorie goal</h3>
+        <form method="post" action="{% url 'food-log' %}">
+            {% csrf_token %}
+            <table class='table table-bordered table-light'>
+                <tr>
+                    <th>Todays goal (kcal): {{ calories.calories }}</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{ calorie_goal_form.calories }}</td>
+                    <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
+                </tr>
+                <tr>
+                    <td><a href="{% url "show-calorie-goal" %}">View all entries</a></td>
+                </tr>
+            </table>
+        </form>
     </div>
-    <div id="calorie_goal">
-        <h2>Update calorie goal</h2>
-        <p>(Today's calorie goal: ...3000 kcal...)</p>
-        <p>...3000...</p>
-        <p>...button(update)...</p>
-    </div>
-    <div id="current_weight">
+    {% comment %} <div id="current_weight">
         <h2>Update current weight</h2>
         <p>(Today's weight: ...100...kg)</p>
         <p>...100...</p>
         <p>...button(update)...</p>
-    </div>
+    </div> {% endcomment %}
 </div>
 {% endblock %}

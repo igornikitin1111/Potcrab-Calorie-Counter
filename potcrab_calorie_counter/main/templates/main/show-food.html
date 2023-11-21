@@ -5,16 +5,28 @@
 {% block title %}Food - {{ food.name|title }}{% endblock title %}
 
 {% block content %}
-    <h1>Food: </h1>
-    <p>Food name: {{ food.name }}</p>
-    <p>Category: {{ food.category }}</p>
-    <p>Portion size: {{ food.portion_weight }}</p>
-    <p>Protein: {{ food.protein }}</p>
-    <p>Fat: {{ food.fat }}</p>
-    <p>Carbohydrates: {{ food.carbohydrates }}</p>
-    <p>Recipe: {{ food.recipe }}</p>
-    <br>
-    {% if food.food_image %}
-        <img src="{{ food.food_image.url }}" alt="food_image" class="food_image" width="100px" height="auto">
-    {% endif %}
+<div class="container">
+    <div class="container px-4 text-left">
+        <div class="row align-items-start">
+            <div class="col-3 p-3 mb-2">
+                {% if food.food_image %}
+                    <img src="{{ food.food_image.url }}" alt="food_image" class="food_image" width="300px" height="auto">
+                {% endif %}
+            </div>
+            <div class="col-3 p-3 mb-2">
+                <h1>Food</h1>
+                <ul>
+                    <li>Food name: {{ food.name }}</li>
+                    <li>Category: {{ food.category }}</li>
+                    <li>Portion size: {{ food.portion_weight }}</li>
+                    <li>Protein: {{ food.protein }}</li>
+                    <li>Fat: {{ food.fat }}</li>
+                    <li>Carbohydrates: {{ food.carbohydrates }}</li>
+                    <li>Recipe: {{ food.recipe }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<div>
 {% endblock %}
+

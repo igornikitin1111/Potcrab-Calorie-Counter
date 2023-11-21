@@ -1,67 +1,58 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
+User = get_user_model()
 
 # Create your models here.
 
 
-# class User(models.Model):
-#     username = models.CharField(_("Username"), max_length=50)
-#     email = models.EmailField(_("E-mail"), max_length=254)
-#     first_name = models.CharField(_("First name"), max_length=50)
-#     last_name = models.CharField(_("Last name"), max_length=50)
-#     # gender = 
-#     height = models.DecimalField(_("Height (cm)"), max_digits=7, decimal_places=2)
-#     weight = models.DecimalField(_("Weight (kg)"), max_digits=7, decimal_places=2)
-
-
 class UserWeight(models.Model):
-    # user = models.ForeignKey(
-    #     User, 
-    #     verbose_name=_("user"), 
-    #     related_name='user',
-    #     on_delete=models.CASCADE,
-    # )
+    user = models.ForeignKey(
+        User, 
+        verbose_name=_("user"), 
+        related_name='weights',
+        on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
     weight = models.DecimalField(_("weight"), max_digits=5, decimal_places=2)
 
     class Meta:
         ordering = ('-created_at',)
 
-#class UserWeightGoal(models.Model):
-#   pass
-
 
 class UserCalories(models.Model):
-    # user = models.ForeignKey(
-    #     User, 
-    #     verbose_name=_("user"), 
-    #     on_delete=models.CASCADE
-    # )
+    user = models.ForeignKey(
+        User, 
+        verbose_name=_("user"), 
+        related_name="calories",
+        on_delete=models.CASCADE
+    )
     calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
     created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
 
+
 class UserCaloriesTotal(models.Model):
-    # user = models.ForeignKey(
-    #     User, 
-    #     verbose_name=_("user"), 
-    #     on_delete=models.CASCADE
-    # )
+    user = models.ForeignKey(
+        User, 
+        verbose_name=_("user"), 
+        related_name="calories_totals",
+        on_delete=models.CASCADE
+    )
     calories_total = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
     created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
 
 
-class UserCalorieGoal(models.Model):
-    # user = models.ForeignKey(
-    #     User, 
-    #     verbose_name=_("user"), 
-    #     on_delete=models.CASCADE
-    # )
-    calorie_goal = models.DecimalField(_("Calorie goal"), max_digits=7, decimal_places=2)
-    created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True)
+class UserCaloriesGoal(models.Model):
+    user = models.ForeignKey(
+        User, 
+        verbose_name=_("user"), 
+        related_name="calorie_goals",
+        on_delete=models.CASCADE
+    )
+    calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2, null=True)
+    created_at = models.DateTimeField(_("created at"), default=timezone.now, db_index=True, null=True)
 
 
 class FoodCategory(models.Model):
@@ -78,7 +69,7 @@ class Food(models.Model):
         verbose_name=_("Category"),
         related_name="food", 
         on_delete=models.CASCADE,
-        null=True
+        blank=True, null=True
     )
     portion_weight = models.DecimalField(_("Portion weight (g)"), max_digits=7, decimal_places=2)
     calories = models.DecimalField(_("Calories"), max_digits=7, decimal_places=2)
@@ -93,14 +84,14 @@ class Food(models.Model):
 
 
 class FoodLog(models.Model):
-    # user = models.ForeignKey(
-    #     User, 
-    #     verbose_name=_("user"), 
-    #     on_delete=models.CASCADE
-    # )
+    user = models.ForeignKey(
+        User, 
+        verbose_name=_("user"), 
+        related_name="log",
+        on_delete=models.CASCADE
+    )
     time_of_day = models.CharField(
-        _("Time of day"), 
-        default="Breakfast", 
+        _("Time of day"),
         max_length=50
     )
     food = models.ForeignKey(

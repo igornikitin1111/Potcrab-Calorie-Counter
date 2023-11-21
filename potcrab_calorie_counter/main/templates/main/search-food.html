@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Search food{% endblock title %}
+
+{% block content %}
+<div class="container">    
+    {% if searched %}
+        <h1>You searched for {{ searched }}</h1>
+        <br/><br/>
+        <ul>
+        {% for product in food %}
+            <li><a href="{% url "show-food" product.id %}">
+                <span class="fs-4 text">{{ product }}<span>
+            </a></li><br/>
+        {% endfor%}
+        </ul>
+    {% else %}
+        <h1>Hey! You forgot to search for food...</h1>
+    {% endif %}
+<div>
+{% endblock %}

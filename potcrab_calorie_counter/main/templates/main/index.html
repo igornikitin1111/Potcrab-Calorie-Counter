@@ -7,12 +7,24 @@
 {% block content %}
 <div class="container">
     <div class="container">
+
         <div id="index_search_bar">
-            <h3>Food database</h3>
-            <p>Enter a food or brand name</p>
+            <h3 class="text-center">Food database</h3>
+            <form method="POST" action="{% url  "search-food" %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="search" class="form-control" name="searched" placeholder="Enter food name">
+                </div>
+                <div class="d-grid gap-2 col-2 mx-auto">
+                    <button type="submit" class="btn btn-outline-primary">SEARCH</button>
+                </div>
+            </form>
         </div>
-        <div id="food_list"></div>
-        <h3>Food List</h3>
+
+        <div id="food_list">
+            <h3>Food List</h3>
+        </div>
+
         {% if foods %}
         <div class="container">
             <div class="row row-cols-3">
@@ -37,6 +49,7 @@
             <p>Zero entries in food list.</p>
         {% endif %}
         </div>
+
         <div id="food_list_content_pagenator">
             {% if foods2.has_previous %}
                 <a href="?page=1">&laquo First</a>
@@ -50,6 +63,7 @@
                 <a href="?page={{ foods2.paginator.num_pages }}">Last &raquo</a>
             {% endif %}
         </div>
+        
     </div>
 </div>
 {% endblock %}

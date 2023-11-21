@@ -5,109 +5,107 @@
 {% block title %}User profile{% endblock title %}
 
 {% block content %}
-<div id='userpage_left_column'>
-    <div id='userpage_details'>
-        <p>Hello, {{ User.username }}</p>
-        <p>E-mail: {{ User.email }}</p>
-        <p>First name: {{ User.username }}</p>
-        <p>Last name: {{ User.username }}</p>
-        {% comment %} <p>Gender: {{ User.gender }}</p> {% endcomment %}
-        <p>Height: {{ User.height }}</p>
-        <p>Weight: {{ User.weight }}</p>
-    </div>
-    <br><br>
-    <div>
-        <h3>Add/Update your weight</h3>
-        <form method="post" action="{% url  'user-profile' %}">
-            {% csrf_token %}
-            <table class='table table-bordered table-light'>
-                <tr>
-                    <th>Date:</th>
-                    <th>Weight(kg):</th>
-                    <th></th>
-                </tr>
-                {% if not weight_form.instance.id %}
-                <tr>
-                    {% include "user/save.html" %}
-                </tr>
-                {% endif %}
-                {% for field in weight %}
+<div class="container px-4 text-center">
+    <div class="row gx-5">
+      <div class="col">
+        <div id='userpage_details'>
+            <p>Hello, {{ user.get_username }}</p>
+            <p>E-mail: {{ user.email }}</p>
+            <p>First name: {{ user.first_name }}</p>
+            <p>Last name: {{ user.last_name }}</p>
+        </div>
+        <div>
+            <h3>Add/Update your weight</h3>
+            <form method="post" action="{% url  'user-profile' %}">
+                {% csrf_token %}
+                <table class='table table-bordered table-light'>
                     <tr>
-                        {% if weight_form.instance.id == field.id %}
-                        {% include "user/save.html" %}
-                        {% else %}
-                        <td>{{ field.created_at }}</td>
-                        <td>{{ field.weight }}</td>
-                        <td>
-                            <button formnovalidate name='edit' class='btn btn-outline-warning' value={{ field.id }}>Edit</button>
-                            <button formnovalidate name='delete' class='btn btn-outline-danger' value={{ field.id }}>Delete</button>
-                        </td>
-                        {% endif %}
+                        <th>Date:</th>
+                        <th>Weight(kg):</th>
+                        <th></th>
                     </tr>
-                {% endfor %}
-                <tr>
-                    <td><a href="{% url "show-weight" %}">View all entries</a></td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <br><br>
-    <div id="userpage_weight_history">
-        ...Weight history graph...
-    </div>
-</div>
-<div id='userpage_right_column'>
-    <div>
-        <form>
+                    {% if not weight_form.instance.id %}
+                    <tr>
+                        {% include "user/save.html" %}
+                    </tr>
+                    {% endif %}
+                    {% for field in weight1 %}
+                        <tr>
+                            {% if weight_form.instance.id == field.id %}
+                            {% include "user/save.html" %}
+                            {% else %}
+                            <td>{{ field.created_at }}</td>
+                            <td>{{ field.weight }}</td>
+                            <td>
+                                <button formnovalidate name='edit' class='btn btn-outline-warning' value={{ field.id }}>Edit</button>
+                                <button formnovalidate name='delete' class='btn btn-outline-danger' value={{ field.id }}>Delete</button>
+                            </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><a href="{% url "show-weight" %}">View all entries</a></td>
+                        <td><a href="{% url "show-weight-chart" %}">Show chart</a></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+      </div>
+      <div class="col">
+        <div class="container">
             <h3>Update calorie goal</h3>
+            <form method="post" action="{% url  'user-profile' %}">
+                {% csrf_token %}
+                <table class='table table-bordered table-light'>
+                    <tr>
+                        <th>Todays goal (kcal): {{ calories.calories }}</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>{{ calorie_goal_form.calories }}</td>
+                        <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
+                    </tr>
+                    <tr>
+                        <td><a href="{% url "show-calorie-goal" %}">View all entries</a></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        {% comment %} <div id='userpage_calorie_consumed_update'>
             <table>
                 <tr>
-                    <td>Todays goal:</td>
-                    <td>{{ calorie_goal }}</td>
+                    <td>Update calories consumed</td>
                 </tr>
                 <tr>
-                    <td>{{ calorie_goal_form.calorie_goal }}</td>
-                    <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
+                    <td>Date:</td>
+                    <td>Pick food:</td>
+                    <td>Weight(g):</td>
                 </tr>
                 <tr>
-                    <td><a href="{% url "show-calorie-goal" %}">View all entries</a></td>
+                    <td>...01/01/2023...</td>
+                    <td>...Lasagna...</td>
+                    <td>...500...</td>
+                </tr>
+                <tr>
+                    <td>...Show food log...</td>
+                    <td>...Update(button)...</td>
                 </tr>
             </table>
-        </form>
-    </div>
-
-    <div id='userpage_calorie_consumed_update'>
-        <table>
-            <tr>
-                <td>Update calories consumed</td>
-            </tr>
-            <tr>
-                <td>Date:</td>
-                <td>Pick food:</td>
-                <td>Weight(g):</td>
-            </tr>
-            <tr>
-                <td>...01/01/2023...</td>
-                <td>...Lasagna...</td>
-                <td>...500...</td>
-            </tr>
-            <tr>
-                <td>...Show food log...</td>
-                <td>...Update(button)...</td>
-            </tr>
-        </table>
-    </div>
-    <div id='userpage_calorie_consumed_history'>
-        ...Calorie history graph...
-    </div>
-    <div id='userpage_calorie_consumed_log'>
-        ...Calory log...
-        Calories(kcal) ... Date
-        --------------------
-        2700             01/01/2023
-        2000             02/01/2023
-        .......
-                paginator
+        </div>
+        <div id='userpage_calorie_consumed_history'>
+            ...Calorie history graph...
+        </div>
+        <div id='userpage_calorie_consumed_log'>
+            ...Calory log...
+            Calories(kcal) ... Date
+            --------------------
+            2700             01/01/2023
+            2000             02/01/2023
+            .......
+                    paginator
+        </div> {% endcomment %}
+      </div>
     </div>
 </div>
+
 {% endblock %}
