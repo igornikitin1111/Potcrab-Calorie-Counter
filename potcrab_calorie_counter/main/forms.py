@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Food, FoodLog, UserWeight, UserCaloriesGoal
+from .models import Food, UserWeight, UserCaloriesGoal
 
 
 class SignUpForm(UserCreationForm):
@@ -31,19 +31,6 @@ class SignUpForm(UserCreationForm):
 		self.fields['password2'].label = ''
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
 
-
-class FoodLogTimeForm(forms.ModelForm):
-    time_of_day = [
-        ("Breakfast", "Breakfast"),
-        ("Lunch", "Lunch"),
-        ("Dinner", "Dinner"),
-    ]
-
-    class Meta:
-        model=FoodLog
-        fields = [
-            'time_of_day', 'food', 'food_amount',
-        ]
 
 class FoodForm(forms.ModelForm):
     class Meta:

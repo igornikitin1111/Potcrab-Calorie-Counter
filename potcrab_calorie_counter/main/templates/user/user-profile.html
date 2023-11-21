@@ -65,9 +65,9 @@
                         <td>{{ calorie_goal_form.calories }}</td>
                         <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
                     </tr>
-                    <tr>
+                    {% comment %} <tr>
                         <td><a href="{% url "show-calorie-goal" %}">View all entries</a></td>
-                    </tr>
+                    </tr> {% endcomment %}
                 </table>
             </form>
         </div>

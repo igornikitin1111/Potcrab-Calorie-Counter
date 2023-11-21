@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Food log history{% endblock title %}
+
+{% block content %}
+<div>
+    <h3>Add/Update your food log entries</h3>
+    <h5><strong class='text'>{% now "DATE_FORMAT" %}</strong></h5>
+    <form method="post" action="{% url 'show-food-log' %}">
+        {% csrf_token %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope='col' class='col-md-2'>Food</th>
+                    <th scope='col' class='col-md-2'>Amount (g/ml)</th>
+                    <th scope='col' class='col-md-2'>Calories (cal)</th>
+                    <th scope='col' class='col-md-2'>Protein (g)</th>
+                    <th scope='col' class='col-md-2'>Fat (g)</th>
+                    <th scope='col' class='col-md-2'>Carbs (g)</th>
+                    <th scope='col' class='col-md-2'>Date added</th>
+                </tr>
+            </thead>
+            <tbody class='.table-hover'>
+            {% for product in user_food_log %}
+                <tr>
+                    <td class='col-md-2'>{{ product.food_consumed.name }}</td>
+                    <td class='col-md-2'>{{ product.consumed_amount }}</td>
+                    <td class='col-md-2'>{{ product.food_consumed.calories }}</td>
+                    <td class='col-md-2'>{{ product.food_consumed.protein}}</td>
+                    <td class='col-md-2'>{{ product.food_consumed.fat}}</td>
+                    <td class='col-md-2'>{{ product.food_consumed.carbohydrates}}</td>   
+                    <td class='col-md-2'>{{ product.consumed_date}}</td>
+                    <td>
+                        <a class='btn btn-danger' href="{% url 'show-food-log-delete' product.id %}">
+                            X
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+</div>
+{% endblock %}

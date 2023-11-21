@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.index, name="index"),
@@ -8,6 +7,10 @@ urlpatterns = [
     path('create-food/', views.create_food, name="create-food"),
     path('food-categories/', views.food_categories, name="food-categories"),
     path('food-log/', views.food_log, name="food-log"),
+    path('food-log-delete/<product_id>', views.food_log_delete, name="food-log-delete"),
+    path('show-food-log/', views.show_food_log, name="show-food-log"),
+    path('show-food-log-delete/<product_id>', views.show_food_log_delete, name="show-food-log-delete"),
+
     path('show-food/<food_id>', views.show_food, name="show-food"),
     path('show-food-categories/<category_id>', views.show_food_categories, name="show-food-categories"),
     path('search-food/', views.search_food, name="search-food"),

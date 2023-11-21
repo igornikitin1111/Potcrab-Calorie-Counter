@@ -8,84 +8,90 @@
 <div id="food_log_left_column">
     <form method="POST">
         {% csrf_token %}
+        <h3>Add food to the log</h3>
         <table>
-            <tr>
-                <th>Select time of the day:</th>
-            </tr>
-            <tr>
-                <td>{{ food_log_form.time_of_day }}</td>
-            </tr>
             <tr>
                 <th>Select food: </th>
             </tr>
             <tr>
-                <td>{{ food_log_form.food }}</td>
+                <td>
+                    <select class='form-select' name='food_consumed' id='food_consumed'>
+                        {% for food in foods %}
+                            <option value='{{ food.name }}'>
+                                {{ food.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <br/>
+                </td>
             </tr>
             <tr>
                 <th>Write amount (g/ml):</th>
             </tr>
             <tr>
-                <td>{{ food_log_form.food_amount }}</td>
+                <td>
+                    <input type='number' name='consumed_amount' id='consumed_amount'>
+                </td>
             </tr>
             <tr>
                 <td>
-                    <button name='food_log_add'>Add</button>
+                    <button type='submit' class='btn btn-primary'>
+                        Add Food
+                    </button>
                 </td>
             </tr>
         </table>
     </form>
-
-    <form>
-        {% csrf_token %}
-        <h2>Todays meals:</h2>
-        <p>{% now "DATE_FORMAT" %}</p>
-        <table>
+    <br/>
+    
+    <h2>Todays meals:</h2>
+    <h5><strong class='text'>{% now "DATE_FORMAT" %}</strong></h5>
+    <table class="table table-hover">
+        <thead>
             <tr>
-                <th>Time of the day</th>
-                <th>Food</th>
-                <th>Amount (g/ml)</th>
-                <th>Calories(cal)</th>
-                <th>Protein (g)</th>
-                <th>Fat (g)</th>
-                <th>Carbs (g)</th>
-                <th></th>
+                <th scope='col' class='col-md-2'>Food</th>
+                <th scope='col' class='col-md-2'>Amount (g/ml)</th>
+                <th scope='col' class='col-md-2'>Calories (cal)</th>
+                <th scope='col' class='col-md-2'>Protein (g)</th>
+                <th scope='col' class='col-md-2'>Fat (g)</th>
+                <th scope='col' class='col-md-2'>Carbs (g)</th>
+                <th scope='col' class='col-md-2'></th>
             </tr>
-            ...for cycle (filter for today)...
+        </thead>
+        <tbody class='.table-hover'>
+        {% for product in user_food_log %}
             <tr>
-                <td>...Breakfast...</td>
-                <td>...Apple...</td>
-                <td>...100...</td>
-                <td>...111...</td>
-                <td>...15...</td>
-                <td>...15...</td>
-                <td>...15...</td>
+                <td class='col-md-2'>{{ product.food_consumed.name }}</td>
+                <td class='col-md-2'>{{ product.consumed_amount }}</td>
+                <td class='col-md-2'>{{ product.food_consumed.calories }}</td>
+                <td class='col-md-2'>{{ product.food_consumed.protein}}</td>
+                <td class='col-md-2'>{{ product.food_consumed.fat}}</td>
+                <td class='col-md-2'>{{ product.food_consumed.carbohydrates}}</td>   
                 <td>
-                    <button formnovalidate name='edit' class='btn btn-outline-warning' value='...'>Edit</button>
-                    <button formnovalidate name='delete' class='btn btn-outline-danger' value='...'>Delete</button>
+                    <a class='btn btn-danger' href="{% url 'food-log-delete' product.id %}">
+                        X
+                    </a>
                 </td>
             </tr>
-            ...endfor cycle...
+        {% endfor %}
             <tr>
-                <td>Total</td>
+                <td id='foodName' class='col-md-2'>Total</td>
                 <td></td>
-                <td>...100...</td>
-                <td>...111...</td>
-                <td>...15...</td>
-                <td>...15...</td>
-                <td>...15...</td>
+                <td id='totalCalories' class='col-md-2'>{{ total_calories.sum }}</td>
+                <td id='totalFat' class='col-md-2'>{{ total_protein.sum }}</td>
+                <td id='totalCarbohydrates' class='col-md-2'>{{ total_fat.sum }}</td>
+                <td id='totalProtein' class='col-md-2'>{{ total_carbohydrates.sum }}</td>
+                <td></td>
             </tr>
-        </table>
-    </form>
+            <tr>
+                <td>
+                    <a href="{% url "show-food-log" %}">View all</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div id="food_log_right_column">
-    {% comment %} <div id="pie chart">
-        <h2>Today's calorie breakdown</h2>
-        <p>...Pie chart...</p>
-        <p>Protein: ...16...</p>
-        <p>Fat: ...16...</p>
-        <p>Carbs: ...16...</p>
-        <p>Total calories: ...600.../...3000(dailie calorie goal)...</p>
-    </div> {% endcomment %}
     <div class="container">
         <h3>Update calorie goal</h3>
         <form method="post" action="{% url 'food-log' %}">
@@ -97,19 +103,10 @@
                 </tr>
                 <tr>
                     <td>{{ calorie_goal_form.calories }}</td>
-                    <td><button name='calorie_goal_save' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
-                </tr>
-                <tr>
-                    <td><a href="{% url "show-calorie-goal" %}">View all entries</a></td>
+                    <td><button name='calorie_goal_save1' class='btn btn-outline-success' value='{{ calorie_goal.id }}'>Save</button></td>
                 </tr>
             </table>
         </form>
     </div>
-    {% comment %} <div id="current_weight">
-        <h2>Update current weight</h2>
-        <p>(Today's weight: ...100...kg)</p>
-        <p>...100...</p>
-        <p>...button(update)...</p>
-    </div> {% endcomment %}
 </div>
 {% endblock %}

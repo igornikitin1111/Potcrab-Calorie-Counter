@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-from .models import Food, FoodCategory, UserWeight, UserCaloriesGoal
-from .forms import FoodForm, UserWeightForm, UserWeightDateForm, UserCaloriesGoalForm, SignUpForm, FoodLogTimeForm
+from .models import Food, FoodLog, FoodCategory, UserWeight, UserCaloriesGoal
+from .forms import FoodForm, UserWeightForm, UserWeightDateForm, UserCaloriesGoalForm, SignUpForm
 from django.core.paginator import Paginator
 import plotly.express as px
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import F, Sum
+from django.utils.timezone import localdate
 
 # Register folder ------->
 def login_user(request):
@@ -110,25 +112,91 @@ def show_food_categories(request, category_id):
 def food_log(request):
     context = {}
 
-    food_log_form = FoodLogTimeForm()
+    # FoodLog
+    today = localdate()
+    categories=FoodCategory.objects.all()
+    if request.method == 'POST':
+        foods = Food.objects.all()
+        food = request.POST['food_consumed']
+        consumed_amount = request.POST['consumed_amount']
+        food_consumed = Food.objects.get(name=food)
 
-    context['food_log_form']=food_log_form
+        user = request.user
+        food_log = FoodLog(
+            user=user, 
+            food_consumed=food_consumed,
+            consumed_date=today,
+            consumed_amount=consumed_amount)
+        food_log.save()
+    else:
+        foods = Food.objects.all()
+
+    user_food_log = FoodLog.objects.filter(user=request.user).filter(consumed_date=today)
+    
+    context['categories']=categories
+    context['foods']=foods
+    context['user_food_log']=user_food_log
+    
+    # Total calculations
+    total_calories = FoodLog.objects.filter(consumed_date=today).aggregate(sum=Sum('food_consumed__calories'))
+    total_protein = FoodLog.objects.filter(consumed_date=today).aggregate(sum=Sum('food_consumed__protein'))
+    total_fat = FoodLog.objects.filter(consumed_date=today).aggregate(sum=Sum('food_consumed__fat'))
+    total_carbohydrates = FoodLog.objects.filter(consumed_date=today).aggregate(sum=Sum('food_consumed__carbohydrates'))
+
+    context['total_calories']=total_calories
+    context['total_protein']=total_protein
+    context['total_fat']=total_fat
+    context['total_carbohydrates']=total_carbohydrates
 
     # Calorie goal form
     calorie_goal_form = UserCaloriesGoalForm()
     calories = UserCaloriesGoal.objects.filter(user=request.user).latest('created_at')
     context['calories']=calories
     if request.method == 'POST':
-        if 'calorie_goal_save' in request.POST:
+        if 'calorie_goal_save1' in request.POST:
             calorie_goal_form = UserCaloriesGoalForm(request.POST)
-            food_log = calorie_goal_form.save(commit=False)
-            food_log.user = request.user
-            food_log.save()
+            calorie_goal1 = calorie_goal_form.save(commit=False)
+            calorie_goal1.user = request.user
+            calorie_goal1.save()
             calorie_goal_form = UserCaloriesGoalForm()
             return redirect('food-log')
     context['calorie_goal_form']=calorie_goal_form
 
     return render(request, "main/food-log.html", context)
+
+@login_required
+def food_log_delete(request, product_id):
+    food_consumed = FoodLog.objects.filter(id=product_id)
+
+    if request.method == 'POST':
+        food_consumed.delete()
+        return redirect('food-log')
+
+    context ={}
+    return render(request, "main/food-log-delete.html", context)
+
+@login_required
+def show_food_log(request):
+    context = {}
+
+    categories=FoodCategory.objects.all()
+    user_food_log = FoodLog.objects.filter(user=request.user).order_by('-consumed_date')
+    
+    context['user_food_log']=user_food_log
+    context['categories']=categories
+
+    return render(request, "main/show-food-log.html", context)
+
+@login_required
+def show_food_log_delete(request, product_id):
+    food_consumed = FoodLog.objects.filter(id=product_id)
+
+    if request.method == 'POST':
+        food_consumed.delete()
+        return redirect('show-food-log')
+
+    context ={}
+    return render(request, "main/show-food-log-delete.html", context)
 
 # User folder ------->
 @login_required
@@ -235,14 +303,11 @@ def weight_chart(request):
 def show_calorie_goal(request):
     context = {}
     calorie_goal_form = UserCaloriesGoalForm()
-
     calorie_check = UserCaloriesGoal.objects.filter(user=request.user).all()
     if calorie_check:
         calorie_goal = UserCaloriesGoal.objects.filter(user=request.user).order_by('-created_at')
     else:
         calorie_goal = "0"
-
-    # calories = UserCaloriesGoal.objects.latest('-created_at')[0]
     context['calorie_goal']=calorie_goal
     if request.method == 'POST':
         if 'save' in request.POST:
