@@ -11,9 +11,7 @@
         {% for category in categories %}
             <table style="width:100%">
                 <td>
-                    {% comment %} <a href="{% url "show-food-categories" %}"> {% endcomment %}
                         <span>{% if category.food.count %}({{ category.food.count }}){% endif %} {{ category.name }}</span>
-                    {% comment %} </a> {% endcomment %}
                 </td>
             </table>
         {% endfor %}
